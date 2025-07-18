@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Applications PDF</title>
+    <style>
+        body {
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            font-size: 12px;
+            padding: 40px;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 20px;
+        }
+
+        .info {
+            text-align: right;
+            font-size: 12px;
+            margin-top: -20px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            background-color: #e1eefa;
+            padding: 10px;
+            border: 1px solid #ccc;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            font-size: 11px;
+            text-align: center;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Title -->
+    <h2>📄 Job Applications Report</h2>
+
+    <!-- User Info -->
+    <div class="info">
+        Generated for: <strong>{{ user.username }}</strong><br>
+        Date: {{ now|date:"M d, Y H:i" }}
+    </div>
+
+    <!-- Applications Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Date Applied</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.job_title }}</td>
+                <td>{{ job.company_name }}</td>
+                <td>{{ job.status|title }}</td>
+                <td>{{ job.date_applied }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="footer-note">
+        © {{ year }} JobTracker • This PDF was generated directly from your data.
+    </p>
+
+</body>
+</html>

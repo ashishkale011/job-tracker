@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% load static %}
+{% load widget_tweaks %}  <!-- ✅ Required to use add_class filter -->
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(120deg, #d4fc79, #96e6a1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .login-card {
+    max-width: 420px;
+    margin: 60px auto;
+    padding: 30px 35px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.6); /* 👓 Glass effect */
+    backdrop-filter: blur(15px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  .login-title {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .login-title h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #0d6efd;
+  }
+
+  .form-label {
+    font-weight: 500;
+  }
+
+  .form-control {
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+
+  .login-btn {
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .form-links {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .form-links a {
+    color: #0d6efd;
+    text-decoration: none;
+  }
+
+  .form-links a:hover {
+    text-decoration: underline;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+
+<div class="login-card">
+  <div class="login-title">
+    <h2>🔐 Welcome Back!</h2>
+    <p class="text-muted" style="font-size: 14px;">Please log in to continue</p>
+  </div>
+
+  {% if form.errors %}
+    <div class="alert alert-danger">
+      <strong>⚠️ Login failed:</strong> Invalid username or password.
+    </div>
+  {% endif %}
+
+  <form method="post" autocomplete="off">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="id_username" class="form-label">Username</label>
+      {{ form.username|add_class:"form-control" }}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_password" class="form-label">Password</label>
+      {{ form.password|add_class:"form-control" }}
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary login-btn">Login</button>
+    </div>
+  </form>
+
+  <div class="form-links mt-3">
+    <p>🔁 <a href="{% url 'password_reset' %}">Forgot password?</a></p>
+    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up now</a></p>
+  </div>
+</div>
+{% endblock %}

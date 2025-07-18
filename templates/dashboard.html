@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<style>
+  body {
+    background: linear-gradient(to bottom right, #e0f7fa, #f1f8ff);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .stat-card {
+    border-radius: 12px;
+    transition: 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: scale(1.03);
+  }
+
+  .job-list .list-group-item {
+    transition: 0.3s ease;
+  }
+
+  .job-list .list-group-item:hover {
+    background-color: #f8f9fa;
+  }
+
+  .section-title {
+    color: #343a40;
+    font-weight: 600;
+  }
+</style>
+
+<div class="container my-4">
+
+  <!-- 👋 Welcome -->
+  <h2 class="mb-4 section-title">📋 Job Application Dashboard</h2>
+
+  <!-- 🔢 Summary Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="card text-white bg-primary stat-card shadow-sm">
+        <div class="card-body text-center">
+          <div><i class="fas fa-folder-open fa-lg mb-2"></i></div>
+          <h6>Total Jobs</h6>
+          <h3 class="fw-bold">{{ total }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="card bg-warning text-dark stat-card shadow-sm">
+        <div class="card-body text-center">
+          <div><i class="fas fa-comments fa-lg mb-2"></i></div>
+          <h6>Interviews</h6>
+          <h3 class="fw-bold">{{ interviews }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="card bg-success text-white stat-card shadow-sm">
+        <div class="card-body text-center">
+          <div><i class="fas fa-badge-check fa-lg mb-2"></i></div>
+          <h6>Offers</h6>
+          <h3 class="fw-bold">{{ offers }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="card bg-danger text-white stat-card shadow-sm">
+        <div class="card-body text-center">
+          <div><i class="fas fa-times-circle fa-lg mb-2"></i></div>
+          <h6>Rejections</h6>
+          <h3 class="fw-bold">{{ rejections }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ➕ Add & Export -->
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <a href="{% url 'add_job' %}" class="btn btn-outline-primary px-4">
+      ➕ Add New Application
+    </a>
+    <a href="{% url 'export_jobs_pdf' %}" class="btn btn-outline-dark px-4">
+      📝 Export to PDF
+    </a>
+  </div>
+
+  <!-- 📋 Application List -->
+  <div class="card shadow-sm job-list">
+    <div class="card-header bg-dark text-white">
+      <strong>Your Job Applications</strong>
+    </div>
+
+    <ul class="list-group list-group-flush">
+      {% for job in jobs %}
+        <li class="list-group-item">
+          <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+            <!-- Job Info -->
+            <div>
+              <strong>{{ job.job_title }}</strong> at {{ job.company_name }}
+              <br>
+              {% if job.status %}
+                <span class="badge bg-secondary mb-1">{{ job.status }}</span>
+              {% endif %}
+              <small class="text-muted d-block">📅 Applied on {{ job.date_applied }}</small>
+
+              {% if job.resume_file %}
+                <a href="{{ job.resume_file.url }}" class="btn btn-sm btn-outline-secondary mt-1" target="_blank">
+                  📄 View Resume
+                </a>
+              {% endif %}
+            </div>
+
+            <!-- Actions -->
+            <div class="text-end">
+              <a href="{% url 'edit_job' job.id %}" class="btn btn-sm btn-outline-primary mb-1">
+                ✏️ Edit
+              </a>
+              <a href="{% url 'delete_job' job.id %}" class="btn btn-sm btn-outline-danger mb-1">
+                ❌ Delete
+              </a>
+            </div>
+          </div>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-center text-muted">
+          No job applications found.
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<!-- FontAwesome CDN (only once in base) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+{% endblock %}
