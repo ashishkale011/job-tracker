@@ -1,0 +1,28 @@
+# Ignore Python environment
+venv/
+.env
+
+# Ignore database and cache
+*.sqlite3
+*.db
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Media files (uploaded resumes)
+media/
+
+# Static files (optional for local use)
+staticfiles/
+static/
+
+# VSCode/IDE config
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
