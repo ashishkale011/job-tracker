@@ -37,28 +37,29 @@ Add jobs, upload resumes, monitor interview progress, and export your data — a
    git clone https://github.com/yourusername/job-tracker.git
    cd job-tracker
 
-2. Create & activate virtual environment:
-   ```bash
-   python -m venv venv
-   .\venv\Scripts\Activate.ps1   # (Windows PowerShell)
-   # or CMD: venv\Scripts\activate
+✅ How to Run Your Django Project (Step-by-Step)
+1️⃣ Open VS Code
+Open your project folder (the one with manage.py).
+2️⃣ Activate Virtual Environment
+In PowerShell (VS Code terminal):
+PowerShell
+  .\venv\Scripts\Activate.ps1               
+3️⃣ Install Dependencies
+Bash
+  pip install -r requirements.txt          
+4️⃣ Apply Migrations
+Bash
+  python manage.py makemigrations      
+  python manage.py migrate                     
+5️⃣ Create Superuser (for admin panel)
+Bash
+   python manage.py createsuperuser     
+6️⃣ Run the Development Server
+Bash
+ python manage.py runserver              
+7️⃣ Open Browser and Visit:
+•	Main site:
+http://127.0.0.1:8000/
+•	Admin panel:
+http://127.0.0.1:8000/admin/
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-
-4. Apply migrations:
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-
-5. Create superuser (for admin panel):
-   ```bash
-   python manage.py createsuperuser
-
-6. Run the server:
-   ```bash
-   python manage.py runserver
-
-7. Open in browser:
-   http://127.0.0.1:8000/
